@@ -1,13 +1,21 @@
-import logo from "./logo.svg";
+import { ThemeProvider } from "./context/theme/index";
+import { useThemeState } from "./context/theme/index";
 import "./App.css";
-// import Home from "./pages/home";
 
 import MainRouter from "routes";
 
 function App() {
+  const themeChanger = useThemeState();
+  console.log(themeChanger, "themchan");
   return (
-    <div className="App">
-      <MainRouter />
+    <div>
+      <ThemeProvider>
+        {/* <div
+          className={`btn ${themeChanger.darkMode ? "btn-dark" : "btn-light"}`}
+        > */}
+        <MainRouter />
+        {/* </div> */}
+      </ThemeProvider>
     </div>
   );
 }

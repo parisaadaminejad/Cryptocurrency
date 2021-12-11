@@ -1,14 +1,20 @@
-import { SearchOutlined, SettingOutlined } from "@ant-design/icons";
-import { Input, Row, Col, Menu, Button } from "antd";
-import { NavLink, Link } from "react-router-dom";
+import { Row, Col, Menu, Button } from "antd";
+import { Link } from "react-router-dom";
 import {
   LOGIN_ROUTE,
   HOME_ROUTE,
   DETAILS_ROUTE,
   ABOUTUS_ROUTE,
 } from "routes/constants";
+import {
+  useThemeDispatch,
+  useThemeState,
+  dark,
+  light,
+} from "../../context/theme/index";
+import { Search } from "../../components/search";
 import Style from "./style";
-const { SubMenu } = Menu;
+const { Item } = Menu;
 const sun = [
   <svg
     width="24"
@@ -68,46 +74,49 @@ const logo = [
   </svg>,
 ];
 export const Header = () => {
+  const themeChanger = useThemeState();
+  const themeDispatch = useThemeDispatch();
+  const themeHandler = () => {
+    themeChanger.darkMode ? dark(themeDispatch) : light(themeDispatch);
+  };
   return (
     <Style>
       <Row gutter={[24, 0]}>
-        <Col span={24} md={4} className="header-logo">
-          <Button type="link">{logo}</Button>
-        </Col>
-        <Col span={24} md={12}>
-          <Menu mode="horizontal" style={{ border: " none" }}>
-            <Menu.Item>
+        <Col span={24} md={16}>
+          <Menu mode="horizontal" style={{ border: " none", margin: 6 }}>
+            <Item>
+              <Button type="link">{logo}</Button>
+            </Item>
+
+            <Item>
               <Link to={ABOUTUS_ROUTE} className="header-menu"></Link>
               About
-            </Menu.Item>
-            <Menu.Item>
+            </Item>
+            <Item>
               <Link to={HOME_ROUTE} className="header-menu"></Link>
               Home
-            </Menu.Item>
-            <Menu.Item>
+            </Item>
+            <Item>
               <Link to={DETAILS_ROUTE} className="header-menu"></Link>
               News
-            </Menu.Item>
+            </Item>
           </Menu>
         </Col>
-        <Col span={24} md={4}>
-          <Input
-            className="header-search"
-            placeholder="Search"
-            prefix={<SearchOutlined />}
-          />
-        </Col>
-        <Col span={24} md={4} className="header-control">
+
+        <Col span={24} md={8} className="header-control">
           <Menu mode="horizontal" style={{ border: " none" }}>
-            <Menu.Item icon={profile}>
+            <Item icon={profile}>
               <Link
                 to={LOGIN_ROUTE}
                 mode="horizontal"
                 className="header-menu"
               ></Link>
               Sign in
-            </Menu.Item>
-            <Menu.Item>{moon}</Menu.Item>
+            </Item>
+            <Search />
+            <Button type="text" onClick={themeHandler} className="btn">
+              {themeChanger.darkMode ? [moon] : [sun]}
+            </Button>
           </Menu>
         </Col>
       </Row>

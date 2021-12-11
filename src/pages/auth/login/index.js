@@ -1,24 +1,45 @@
 import { Link } from "react-router-dom";
-import { Button, Row, Col, Typography, Form, Input, Switch } from "antd";
+import {
+  Button,
+  Row,
+  Col,
+  Typography,
+  Form,
+  Input,
+  Switch,
+  message,
+} from "antd";
 import signinbg from "assets/images/img-signin.jpg";
-import Layout from "../../../layout/index";
+import Layout from "layout/index";
 import Style from "./style";
+import UseTitle from "hooks/useTitle";
+import { postRequest } from "api";
+import { POST_API_URL } from "./constants";
+import { useState } from "react";
 
 const { Item } = Form;
 export const Login = () => {
   const [form] = Form.useForm();
+  const [loading, setLoading] = useState(false);
   const { Title } = Typography;
-
+  UseTitle("login");
   function onChange(checked) {
     console.log(`switch to ${checked}`);
   }
-  const onFinish = (values) => {
-    console.log("Success:", values);
-  };
+  async function onFinish(formValues) {
+    // try {
+    //   setLoading(true);
+    //   await postRequest(POST_API_URL, formValues);
+    //   setLoading(false);
+    // } catch (error) {
+    //   setLoading(false);
+    //   console.log("error", JSON.stringify(error));
+    // }
+  }
 
-  const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
-  };
+  // const onFinishFailed = (errorInfo) => {
+  //   console.log("Failed:", errorInfo);
+  // };
   return (
     <Style>
       <Layout>
@@ -31,10 +52,12 @@ export const Login = () => {
             <Title>Sign In</Title>
             <Title level={5}>Enter your email and password to sign in</Title>
             <Form
+              form={form}
               onFinish={onFinish}
-              onFinishFailed={onFinishFailed}
+              // onFinishFailed={onFinishFailed}
               layout="vertical"
               className="row-col"
+              initialValues={{ remember: false }}
             >
               <Item
                 className="username"
@@ -75,7 +98,12 @@ export const Login = () => {
               </Item>
 
               <Item>
-                <Button type="primary" htmlType="submit" block>
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  block
+                  loading={loading}
+                >
                   SIGN IN
                 </Button>
               </Item>

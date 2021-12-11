@@ -36,3 +36,17 @@
     transform: rotate(360deg);
   }
 }
+.btn-light {
+  background-color: #ddd;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.btn-dark {
+  background-color: #ffffff;
+  color: #222;
+}
+.bg {
+  height: 100vh;
+  padding: 50px;
+}

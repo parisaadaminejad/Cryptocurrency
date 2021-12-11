@@ -2,25 +2,30 @@ import styled from "styled-components";
 const Style = styled.div`
   overflow: hidden;
   .header-control {
-    /* display: flex;
-    flex-direction: row-reverse;
-    align-items: center;*/
-    /* margin-top: 10px; */
     svg {
       vertical-align: middle;
     }
   }
-  .header-search {
-    width: 200px;
-    margin: 10px 7px 0 0;
-    border-radius: 6px;
-    height: 40px;
-    border: 1px solid #d9d9d9;
-    /* margin-top: 10px; */
+
+  .bg {
+    height: 100vh;
+    padding: 50px;
   }
 
-  .header-logo svg {
-    /* margin-top: 2px; */
+  .btn {
+    padding-top: 15px;
+    cursor: pointer;
+  }
+
+  .btn-light {
+    background-color: #ddd;
+    color: #ffffff;
+    cursor: pointer;
+  }
+
+  .btn-dark {
+    background-color: #ffffff;
+    color: #222;
   }
 `;
 export default Style;

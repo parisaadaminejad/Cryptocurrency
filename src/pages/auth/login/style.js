@@ -3,8 +3,8 @@ export const Style = styled.div`
   overflow: hidden;
   .sign-img img {
     width: 100%;
-    max-width: 650px;
-    height: 700px;
+    max-width: 600px;
+    height: 500px;
     margin: auto;
     display: block;
   }
