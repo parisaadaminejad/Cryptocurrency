@@ -1,14 +1,31 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Input, AutoComplete } from "antd";
 import { API_KEY } from "../../constants/index";
+import { api } from "pages/home";
 function getRandomInt(max, min = 0) {
   return Math.floor(Math.random() * (max - min + 1)) + min; // eslint-disable-line no-mixed-operators
 }
-const searchResult = (query) =>
-  new Array(getRandomInt(5))
-    .join(".")
-    .split(".")
-    .map((_, idx) => {
+
+export const Search = () => {
+  const [query, setQuery] = useState([]);
+  const [dataSerch, setDataSearh] = useState([{ id: "radin" }]);
+  const [options, setOptions] = useState([]);
+  useEffect(() => {
+    api
+      .get(`/v2/assets?api_key=${API_KEY}&search=${query}`)
+      .then((response) => {
+        console.log(response.data, "query 3");
+        setDataSearh(response.data.data);
+      })
+      .catch((error) => {
+        console.log(error);
+        setDataSearh([{ id: error, symbol: "" }]);
+      });
+  }, [query]);
+
+  const searchResult = (query) => {
+    setQuery(query);
+    return dataSerch.map((item, idx) => {
       const category = `${query}${idx}`;
       return {
         value: category,
@@ -20,30 +37,34 @@ const searchResult = (query) =>
             }}
           >
             <span>
-              Found {query} on{" "}
+              test
               <a
-                href={`http://89.42.208.245:9090/api/v2/assets?api_key=${API_KEY}/search?q=${query}`}
+                href={`/details/${item.id}`}
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                {category}
+                {item.id}
               </a>
             </span>
-            <span>{getRandomInt(200, 100)} results</span>
+            <span>{item.symbol}</span>
           </div>
         ),
       };
     });
-export const Search = () => {
-  const [options, setOptions] = useState([]);
-
-  const handleSearch = (value) => {
-    setOptions(value ? searchResult(value) : []);
   };
 
-  const onSelect = (value) => {
-    console.log("onSelect", value);
+  const handleSearch = (query) => {
+    console.log(searchResult(query));
+    setOptions(
+      query ? searchResult(query) : [{ value: "test", lable: "test" }]
+    );
   };
+
+  const onSelect = (query) => {
+    console.log("onSelect", query);
+  };
+
+  console.log({ options });
 
   return (
     <AutoComplete

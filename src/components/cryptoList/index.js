@@ -2,7 +2,7 @@ import { Fragment, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { api } from "pages/home";
 import { API_KEY } from "../../constants/index";
-
+import { renderIcon } from "../utils";
 import React, { useState } from "react";
 import { Table, Radio, Divider } from "antd";
 import NumberFormat from "react-number-format";
@@ -24,10 +24,7 @@ const rowSelection = {
 export const Demo = (props) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
-  function color(number) {
-    if (number > 0) {
-    }
-  }
+
   useEffect(() => {
     setLoading(true);
     api
@@ -35,7 +32,7 @@ export const Demo = (props) => {
       .then((response) => {
         console.log(response.data.data, "response");
         setData(response.data.data);
-        // console.log(response.data.data, "response");
+
         setLoading(false);
       })
       .catch((error) => {
@@ -52,10 +49,17 @@ export const Demo = (props) => {
       sorter: (a, b) => a.rank - b.rank,
       width: 80,
     },
+
     {
       title: "Name",
       dataIndex: "id",
-      render: (id) => <Link to={`/details/${id}`}>{id}</Link>,
+      render: (id) => (
+        <Link to={`/details/${id}`} style={{ fontSize: "15px" }}>
+          {renderIcon(id)}
+          {id}
+        </Link>
+      ),
+      // render: (symbol) => <span>{symbol}</span>,
     },
 
     {
@@ -64,6 +68,7 @@ export const Demo = (props) => {
       sorter: (a, b) => a.rank - b.rank,
       render: (priceUsd) => (
         <NumberFormat
+          decimalScale={2}
           thousandsGroupStyle={"lakh"}
           value={priceUsd}
           displayType={"text"}
@@ -72,8 +77,6 @@ export const Demo = (props) => {
           renderText={(value, props) => <div {...props}>{value}</div>}
         />
       ),
-
-      // render: (priceUsd) => <p>${` ${priceUsd.toFixed(3)}`}</p>,
     },
     {
       title: "24h%",
@@ -81,11 +84,12 @@ export const Demo = (props) => {
       sorter: (a, b) => a.rank - b.rank,
       render: (priceUsd) => (
         <NumberFormat
+          decimalScale={2}
           thousandsGroupStyle={"lakh"}
           value={priceUsd}
           displayType={"text"}
           thousandSeparator={true}
-          prefix={"$"}
+          suffix={"%"}
           renderText={(value, props) => <div {...props}>{value}</div>}
         />
       ),
@@ -96,6 +100,7 @@ export const Demo = (props) => {
       sorter: (a, b) => a.rank - b.rank,
       render: (priceUsd) => (
         <NumberFormat
+          decimalScale={3}
           value={priceUsd}
           displayType={"text"}
           thousandSeparator={true}
@@ -107,10 +112,22 @@ export const Demo = (props) => {
     {
       title: "Volume(24h)",
       dataIndex: "volumeUsd24Hr",
-      dataIndex: "symbol",
-
+      // dataIndex: "symbol",
       sorter: (a, b) => a.rank - b.rank,
-      render: (volumeUsd24Hr, symbol) => <p>{`${volumeUsd24Hr}${symbol}`}</p>,
+      render: (priceUsd, volumeUsd24Hr, symbol) => (
+        <div>
+          <NumberFormat
+            decimalScale={3}
+            value={priceUsd}
+            displayType={"text"}
+            thousandSeparator={true}
+            prefix={"$"}
+            renderText={(value, props) => <div {...props}>{value}</div>}
+          />
+          {/* <span>{symbol}</span> */}
+        </div>
+      ),
+      // render: (volumeUsd24Hr, symbol) => <p>{`${volumeUsd24Hr}${symbol}`}</p>,
     },
 
     {
@@ -119,6 +136,7 @@ export const Demo = (props) => {
       sorter: (a, b) => a.rank - b.rank,
       render: (priceUsd) => (
         <NumberFormat
+          decimalScale={3}
           value={priceUsd}
           displayType={"text"}
           thousandSeparator={true}

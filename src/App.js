@@ -1,22 +1,22 @@
 import { ThemeProvider } from "./context/theme/index";
 import { useThemeState } from "./context/theme/index";
-import "./App.css";
-
 import MainRouter from "routes";
+import "./App.css";
 
 function App() {
   const themeChanger = useThemeState();
   console.log(themeChanger, "themchan");
+
   return (
-    <div>
-      <ThemeProvider>
-        {/* <div
+    // <div className={`btn ${themeChanger ? "btn-dark" : "btn-light"}`}>
+    <ThemeProvider>
+      {/* <div
           className={`btn ${themeChanger.darkMode ? "btn-dark" : "btn-light"}`}
         > */}
-        <MainRouter />
-        {/* </div> */}
-      </ThemeProvider>
-    </div>
+      <MainRouter />
+      {/* </div> */}
+    </ThemeProvider>
+    // </div>
   );
 }
 

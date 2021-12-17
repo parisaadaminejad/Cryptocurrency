@@ -83,7 +83,7 @@ export const Header = () => {
     <Style>
       <Row gutter={[24, 0]}>
         <Col span={24} md={16}>
-          <Menu mode="horizontal" style={{ border: " none", margin: 6 }}>
+          <Menu mode="horizontal" style={{ border: " none", margin: "6px" }}>
             <Item>
               <Button type="link">{logo}</Button>
             </Item>
@@ -98,13 +98,13 @@ export const Header = () => {
             </Item>
             <Item>
               <Link to={DETAILS_ROUTE} className="header-menu"></Link>
-              News
+              Details
             </Item>
           </Menu>
         </Col>
 
         <Col span={24} md={8} className="header-control">
-          <Menu mode="horizontal" style={{ border: " none" }}>
+          <Menu mode="horizontal" style={{ border: " none", margin: 6 }}>
             <Item icon={profile}>
               <Link
                 to={LOGIN_ROUTE}
