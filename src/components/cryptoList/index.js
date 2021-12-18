@@ -4,7 +4,7 @@ import { api } from "pages/home";
 import { API_KEY } from "../../constants/index";
 import { renderIcon } from "../utils";
 import React, { useState } from "react";
-import { Table, Radio, Divider } from "antd";
+import { Table, Divider } from "antd";
 import NumberFormat from "react-number-format";
 const rowSelection = {
   onChange: (selectedRowKeys, selectedRows) => {
