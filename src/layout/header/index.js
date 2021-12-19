@@ -11,9 +11,10 @@ import {
   useThemeState,
   dark,
   light,
-} from "../../context/theme/index";
-import { Search } from "../../components/search";
+} from "context/theme/index";
+import { Search } from "components/search";
 import Style from "./style";
+
 const { Item } = Menu;
 const sun = [
   <svg
@@ -73,12 +74,15 @@ const logo = [
     <circle cx="20" cy="8" r="4" fill="currentColor"></circle>
   </svg>,
 ];
+
 export const Header = () => {
   const themeChanger = useThemeState();
   const themeDispatch = useThemeDispatch();
+
   const themeHandler = () => {
     themeChanger.darkMode ? dark(themeDispatch) : light(themeDispatch);
   };
+
   return (
     <Style>
       <Row gutter={[24, 0]}>
@@ -114,6 +118,7 @@ export const Header = () => {
               Sign in
             </Item>
             <Search />
+
             <Button type="text" onClick={themeHandler} className="btn">
               {themeChanger.darkMode ? [moon] : [sun]}
             </Button>

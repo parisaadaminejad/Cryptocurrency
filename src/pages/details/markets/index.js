@@ -1,11 +1,11 @@
-import { Fragment, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import NumberFormat from "react-number-format";
+import { Table, Tag, Space, Divider } from "antd";
 import { api } from "pages/home";
 import { API_KEY } from "constants/index";
-import { renderIcon } from "../utils";
-import React, { useState } from "react";
-import { Table, Divider } from "antd";
-import NumberFormat from "react-number-format";
+import { Link } from "react-router-dom";
+
 const rowSelection = {
   onChange: (selectedRowKeys, selectedRows) => {
     console.log(
@@ -20,15 +20,15 @@ const rowSelection = {
     name: record.name,
   }),
 };
-
-export const Demo = (props) => {
+export const Market = () => {
+  const { id, baseSymbol } = useParams();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
-
+  // api.coincap.io/v2/assets/bitcoin/markets
   useEffect(() => {
     setLoading(true);
     api
-      .get(`/v2/assets?api_key=${API_KEY}`)
+      .get(`/v2/assets/${id}/markets?api_key=${API_KEY}`)
       .then((response) => {
         console.log(response.data.data, "response");
         setData(response.data.data);
@@ -40,26 +40,20 @@ export const Demo = (props) => {
         setLoading(false);
       });
   }, []);
-  console.log(data, "dara");
-
   const columns = [
     {
-      title: "#",
-      dataIndex: "rank",
-      sorter: (a, b) => a.rank - b.rank,
-      width: 80,
+      title: "source",
+      dataIndex: "exchangeId",
     },
-
     {
-      title: "Name",
-      dataIndex: "id",
+      title: "Pairs",
+      dataIndex: "quoteSymbol",
+      sorter: (a, b) => a.rank - b.rank,
       render: (id) => (
         <Link to={`/details/${id}`} style={{ fontSize: "15px" }}>
-          {renderIcon(id)}
           {id}
         </Link>
       ),
-      // render: (symbol) => <span>{symbol}</span>,
     },
 
     {
@@ -79,8 +73,23 @@ export const Demo = (props) => {
       ),
     },
     {
-      title: "24h%",
-      dataIndex: "changePercent24Hr",
+      title: "volume",
+      dataIndex: "volumeUsd24Hr",
+      sorter: (a, b) => a.rank - b.rank,
+      render: (priceUsd) => (
+        <NumberFormat
+          decimalScale={3}
+          value={priceUsd}
+          displayType={"text"}
+          thousandSeparator={true}
+          prefix={"$"}
+          renderText={(value, props) => <div {...props}>{value}</div>}
+        />
+      ),
+    },
+    {
+      title: "volume %",
+      dataIndex: "volumePercent",
       sorter: (a, b) => a.rank - b.rank,
       render: (priceUsd) => (
         <NumberFormat
@@ -94,63 +103,45 @@ export const Demo = (props) => {
         />
       ),
     },
-    {
-      title: "MarketCap",
-      dataIndex: "marketCapUsd",
-      sorter: (a, b) => a.rank - b.rank,
-      render: (priceUsd) => (
-        <NumberFormat
-          decimalScale={3}
-          value={priceUsd}
-          displayType={"text"}
-          thousandSeparator={true}
-          prefix={"$"}
-          renderText={(value, props) => <div {...props}>{value}</div>}
-        />
-      ),
-    },
-    {
-      title: "Volume(24h)",
-      dataIndex: "volumeUsd24Hr",
-      // dataIndex: "symbol",
-      sorter: (a, b) => a.rank - b.rank,
-      render: (priceUsd, volumeUsd24Hr, symbol) => (
-        <div>
-          <NumberFormat
-            decimalScale={3}
-            value={priceUsd}
-            displayType={"text"}
-            thousandSeparator={true}
-            prefix={"$"}
-            renderText={(value, props) => <div {...props}>{value}</div>}
-          />
-          {/* <span>{symbol}</span> */}
-        </div>
-      ),
-      // render: (volumeUsd24Hr, symbol) => <p>{`${volumeUsd24Hr}${symbol}`}</p>,
-    },
 
-    {
-      title: "Circulating Supply",
-      dataIndex: "supply",
-      sorter: (a, b) => a.rank - b.rank,
-      render: (priceUsd) => (
-        <NumberFormat
-          decimalScale={3}
-          value={priceUsd}
-          displayType={"text"}
-          thousandSeparator={true}
-          prefix={"$"}
-          renderText={(value, props) => <div {...props}>{value}</div>}
-        />
-      ),
-    },
+    // {
+    //   title: "Volume(24h)",
+    //   dataIndex: "volumeUsd24Hr",
+    //   // dataIndex: "symbol",
+    //   sorter: (a, b) => a.rank - b.rank,
+    //   render: (priceUsd, volumeUsd24Hr, symbol) => (
+    //     <div>
+    //       <NumberFormat
+    //         decimalScale={3}
+    //         value={priceUsd}
+    //         displayType={"text"}
+    //         thousandSeparator={true}
+    //         prefix={"$"}
+    //         renderText={(value, props) => <div {...props}>{value}</div>}
+    //       />
+    //     </div>
+    //   ),
+    // },
+
+    // {
+    //   title: "Circulating Supply",
+    //   dataIndex: "supply",
+    //   sorter: (a, b) => a.rank - b.rank,
+    //   render: (priceUsd) => (
+    //     <NumberFormat
+    //       decimalScale={3}
+    //       value={priceUsd}
+    //       displayType={"text"}
+    //       thousandSeparator={true}
+    //       prefix={"$"}
+    //       renderText={(value, props) => <div {...props}>{value}</div>}
+    //     />
+    //   ),
+    // },
   ];
-
+  const { quoteId } = data;
   return (
     <div>
-      <Divider />
-
       <Table
         // key={id}
         dataSource={data}
@@ -163,4 +154,4 @@ export const Demo = (props) => {
     </div>
   );
 };
-export default Demo;
+export default Market;

@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { api } from "pages/home";
-import { API_KEY } from "../../constants/index";
-import Layout from "../../layout";
+import { API_KEY } from "constants/index";
+import Layout from "layout";
 import { Row, Col, Button, Divider } from "antd";
 import NumberFormat from "react-number-format";
 import { SearchOutlined, InfoOutlined } from "@ant-design/icons";
-import { renderIcon } from "../../components/utils";
+import { renderIcon } from "components/utils";
+import Market from "./markets";
 const icon = (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -51,7 +52,6 @@ export const Details = () => {
     marketCapUsd,
     volumeUsd24Hr,
     supply,
-    CheckCircleTwoTone,
   } = data;
   return (
     <Layout>
@@ -170,7 +170,7 @@ export const Details = () => {
             Circulating Supply
             <span style={{ color: "rgb(166, 176, 195)" }}>{icon}</span>
           </p>
-          {/* <CheckCircleTwoTone twoToneColor="#52c41a" /> */}
+
           <NumberFormat
             decimalScale={2}
             value={supply}
@@ -184,6 +184,8 @@ export const Details = () => {
         </Col>
       </Row>
       <Divider />
+      <h2 style={{ marginLeft: "45px", fontSize: "30px" }}>{name} Markets</h2>
+      <Market />
     </Layout>
   );
 };

@@ -337,6 +337,7 @@ module.exports = function (webpackEnv) {
         hooks: path.resolve(__dirname, "../src/hooks"),
         api: path.resolve(__dirname, "../src/utils/api"),
         layout: path.resolve(__dirname, "../src/layout"),
+        context: path.resolve(__dirname, "../src/context"),
         // Allows for better profiling with ReactDevTools
         ...(isEnvProductionProfile && {
           "react-dom$": "react-dom/profiling",

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Input, AutoComplete } from "antd";
-import { API_KEY } from "../../constants/index";
+import { API_KEY } from "constants/index";
 import { api } from "pages/home";
 function getRandomInt(max, min = 0) {
   return Math.floor(Math.random() * (max - min + 1)) + min; // eslint-disable-line no-mixed-operators
@@ -8,7 +8,7 @@ function getRandomInt(max, min = 0) {
 
 export const Search = () => {
   const [query, setQuery] = useState([]);
-  const [dataSerch, setDataSearh] = useState([{ id: "radin" }]);
+  const [dataSerch, setDataSearh] = useState([{ id: "" }]);
   const [options, setOptions] = useState([]);
   useEffect(() => {
     api
@@ -37,10 +37,9 @@ export const Search = () => {
             }}
           >
             <span>
-              test
               <a
                 href={`/details/${item.id}`}
-                target="_blank"
+                // target="_blank"
                 rel="noopener noreferrer"
               >
                 {item.id}
