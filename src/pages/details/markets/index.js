@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import NumberFormat from "react-number-format";
-import { Table, Tag, Space, Divider } from "antd";
+import { Table } from "antd";
 import { api } from "pages/home";
 import { API_KEY } from "constants/index";
 import { Link } from "react-router-dom";
@@ -16,7 +16,7 @@ const rowSelection = {
   },
   getCheckboxProps: (record) => ({
     disabled: record.name === "Disabled User",
-    // Column configuration not to be checked
+
     name: record.name,
   }),
 };
@@ -24,7 +24,7 @@ export const Market = () => {
   const { id, baseSymbol } = useParams();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
-  // api.coincap.io/v2/assets/bitcoin/markets
+
   useEffect(() => {
     setLoading(true);
     api
@@ -103,43 +103,8 @@ export const Market = () => {
         />
       ),
     },
-
-    // {
-    //   title: "Volume(24h)",
-    //   dataIndex: "volumeUsd24Hr",
-    //   // dataIndex: "symbol",
-    //   sorter: (a, b) => a.rank - b.rank,
-    //   render: (priceUsd, volumeUsd24Hr, symbol) => (
-    //     <div>
-    //       <NumberFormat
-    //         decimalScale={3}
-    //         value={priceUsd}
-    //         displayType={"text"}
-    //         thousandSeparator={true}
-    //         prefix={"$"}
-    //         renderText={(value, props) => <div {...props}>{value}</div>}
-    //       />
-    //     </div>
-    //   ),
-    // },
-
-    // {
-    //   title: "Circulating Supply",
-    //   dataIndex: "supply",
-    //   sorter: (a, b) => a.rank - b.rank,
-    //   render: (priceUsd) => (
-    //     <NumberFormat
-    //       decimalScale={3}
-    //       value={priceUsd}
-    //       displayType={"text"}
-    //       thousandSeparator={true}
-    //       prefix={"$"}
-    //       renderText={(value, props) => <div {...props}>{value}</div>}
-    //     />
-    //   ),
-    // },
   ];
-  const { quoteId } = data;
+
   return (
     <div>
       <Table
