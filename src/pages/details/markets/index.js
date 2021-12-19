@@ -110,7 +110,7 @@ export const Market = () => {
       <Table
         // key={id}
         dataSource={data}
-        sticky="true"
+        // sticky="true"
         rowSelection={{
           ...rowSelection,
         }}

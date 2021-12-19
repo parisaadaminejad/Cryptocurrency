@@ -8,6 +8,7 @@ import NumberFormat from "react-number-format";
 import { SearchOutlined, InfoOutlined } from "@ant-design/icons";
 import { renderIcon } from "components/utils";
 import Market from "./markets";
+import UseTitle from "hooks/useTitle";
 const icon = (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -26,7 +27,7 @@ export const Details = () => {
   const { id } = useParams();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState();
-
+  UseTitle("Details");
   useEffect(() => {
     api
       .get(`/v2/assets/${id}?api_key=${API_KEY}`)
@@ -55,13 +56,14 @@ export const Details = () => {
   } = data;
   return (
     <Layout>
-      <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-        <Col span={4} push={20}>
+      <Divider />
+      <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }} justify="end">
+        <Col span={3} pull={1}>
           <p>{`${name} price (${symbol})`}</p>
         </Col>
       </Row>
       <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-        <Col className="gutter-row" span={11} push={1}>
+        <Col className="gutter-row" span={10} push={1}>
           <h1 style={{ display: "inline-block", marginRight: "10px" }}>
             {renderIcon(id)} {name}
           </h1>
@@ -69,8 +71,8 @@ export const Details = () => {
             {symbol}
           </Button>
         </Col>
-        <Col className="gutter-row" span={5} push={7}>
-          <h1 style={{ display: "inline-block" }}>
+        <Col className="gutter-row" span={5} push={9}>
+          <h2 style={{ display: "inline-block" }}>
             <NumberFormat
               decimalScale={2}
               thousandsGroupStyle={"lakh"}
@@ -80,7 +82,7 @@ export const Details = () => {
               prefix={"$"}
               renderText={(value, props) => <div {...props}>{value}</div>}
             />
-          </h1>
+          </h2>
           <Button
             style={{ marginLeft: "20px", background: "red" }}
             size="middle"

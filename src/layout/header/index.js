@@ -85,8 +85,8 @@ export const Header = () => {
 
   return (
     <Style>
-      <Row gutter={[24, 0]}>
-        <Col span={24} md={16}>
+      <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
+        <Col span={10}>
           <Menu mode="horizontal" style={{ border: " none", margin: "6px" }}>
             <Item>
               <Button type="link">{logo}</Button>
@@ -107,7 +107,7 @@ export const Header = () => {
           </Menu>
         </Col>
 
-        <Col span={24} md={8} className="header-control">
+        <Col span={10} push={4} className="header-control">
           <Menu mode="horizontal" style={{ border: " none", margin: 6 }}>
             <Item icon={profile}>
               <Link
