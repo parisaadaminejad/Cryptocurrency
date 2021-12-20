@@ -8,6 +8,7 @@ import NumberFormat from "react-number-format";
 import { SearchOutlined, InfoOutlined } from "@ant-design/icons";
 import { renderIcon } from "components/utils";
 import Market from "./markets";
+import Chart from "./chart";
 import UseTitle from "hooks/useTitle";
 const icon = (
   <svg
@@ -57,12 +58,12 @@ export const Details = () => {
   return (
     <Layout>
       <Divider />
-      <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }} justify="end">
+      <Row justify="end">
         <Col span={3} pull={1}>
           <p>{`${name} price (${symbol})`}</p>
         </Col>
       </Row>
-      <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
+      <Row>
         <Col className="gutter-row" span={10} push={1}>
           <h1 style={{ display: "inline-block", marginRight: "10px" }}>
             {renderIcon(id)} {name}
@@ -100,7 +101,7 @@ export const Details = () => {
           </Button>
         </Col>
       </Row>
-      <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
+      <Row>
         <Col span={11} push={1}>
           <Button
             size="middle"
@@ -186,7 +187,9 @@ export const Details = () => {
         </Col>
       </Row>
       <Divider />
+      <Chart />
       <h2 style={{ marginLeft: "45px", fontSize: "30px" }}>{name} Markets</h2>
+
       <Market />
     </Layout>
   );
