@@ -16,8 +16,7 @@ const options = (data) => {
 };
 
 const Chart = () => {
-  // ok?dadash yani api mizaram ?are day,
-  const data = [1, 52, 8, 5, 5, 5, 5]; // in datato ya inja begir ya az balayi pass bede
+  const data = [1, 52, 8, 5, 5, 5, 5];
   return (
     <>
       <HighchartsReact highcharts={Highcharts} options={options(data)} />
